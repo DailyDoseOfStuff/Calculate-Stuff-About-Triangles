@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct AnswerView: View {
-    
-    @State var answer: Double
-    
+
+    let answer: Double
+
     var body: some View {
-        
-        
-        
+
+        Text("3rd Side Length is \(answer).")
+            .foregroundStyle(.blue)
+
     }
 }
 
 #Preview {
-    
+    AnswerView(answer: 5.0)
 }
