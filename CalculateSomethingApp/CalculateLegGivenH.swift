@@ -1,37 +1,39 @@
 //
-//  ContentView.swift
+//  CalculateLegGivenH.swift
 //  CalculateSomethingApp
 //
-//  Created by ALLEN LIU on 9/2/26.
-//  Calculate Jump power generated based on weight
+//  Created by ALLEN LIU on 9/9/26.
+//
 
 import SwiftUI
 
-struct ContentView: View {
+struct CalculateLegGivenH: View {
 
-    @State var Side1 = ""
-    @State var Side2 = ""
-    @State var DSide1 = 0.0
-    @State var DSide2 = 0.0
+    @State var Hyp = ""
+    @State var Side = ""
+    @State var DHyp = 0.0
+    @State var DSide = 0.0
     @State var answer = 0.0
     @State var showAlert = false
     @State var navigateToAnswer = false
 
-    func FindSide3() -> Bool {
-        guard let side1 = Double(Side1), let side2 = Double(Side2) else {
+    func FindSide() -> Bool {
+        guard let hyp = Double(Hyp), let side = Double(Side) else {
             showAlert = true
             return false
         }
 
-        DSide1 = side1
-        DSide2 = side2
-        answer = sqrt(pow(DSide1, 2) + pow(DSide2, 2))
+        DHyp = hyp
+        DSide = side
+        answer = sqrt(pow(DHyp, 2) - pow(DSide, 2))
         return true
     }
 
     var body: some View {
-        NavigationStack {
+
+        NavigationView {
             VStack {
+                
                 ZStack(alignment: .top) {
                     Text("3rd side of Right Triangle")
                         .multilineTextAlignment(.center)
@@ -41,14 +43,15 @@ struct ContentView: View {
                         .shadow(color: .yellow, radius: 12)
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .frame(width: 300, height: 80)
+                                .frame(width: 300, height: 100)
                                 .foregroundStyle(.green)
                         )
                 }
 
+                
                 Spacer()
-
-                TextField("Side 1 ", text: $Side1)
+                
+                TextField("Hypotenuse", text: $Hyp)
                     .textFieldStyle(.plain)
                     .padding()
                     .background(Color(.systemBackground))
@@ -58,8 +61,9 @@ struct ContentView: View {
                             style: .continuous
                         )
                     )
+                    .frame(width: 350)
 
-                TextField("Side 2 ", text: $Side2)
+                TextField("Side", text: $Side)
                     .textFieldStyle(.plain)
                     .padding()
                     .background(Color(.systemBackground))
@@ -69,25 +73,26 @@ struct ContentView: View {
                             style: .continuous
                         )
                     )
+                    .frame(width:350)
 
                 Button("Reveal Length") {
-                    if FindSide3() {
+                    if FindSide() {
                         navigateToAnswer = true
                     }
                 }
                 .frame(width: 250, height: 50)
                 .font(.title2)
                 .foregroundStyle(.black)
+                .bold()
                 .background(
                     RoundedRectangle(cornerRadius: 30)
                         .frame(width: 300, height: 50)
                         .foregroundStyle(.blue)
                 )
                 .navigationDestination(isPresented: $navigateToAnswer) {
-                    AnswerView(answer: answer, calculationType: "Hypotenuse length")
+                    AnswerView(answer: answer, calculationType: "Leg length")
                 }
-
-                Spacer()
+                
                 Spacer()
                 
                 NavigationLink{
@@ -102,23 +107,23 @@ struct ContentView: View {
                         )
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding()
-            .background(.purple)
+            .frame(maxWidth:.infinity, maxHeight: .infinity)
+            .background(.orange)
             .alert(
                 "Put the numbers in not the letters ",
                 isPresented: $showAlert,
                 actions: {
                     Button("I understand I have failed") {
-                        Side1 = ""
-                        Side2 = ""
+                        Hyp = ""
+                        Side = ""
                     }
                 }
             )
+
         }
     }
 }
 
 #Preview {
-    ContentView()
+    CalculateLegGivenH()
 }
