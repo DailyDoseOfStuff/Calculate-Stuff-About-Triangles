@@ -33,7 +33,7 @@ struct ContentView: View {
         NavigationStack {
             VStack {
                 ZStack(alignment: .top) {
-                    Text("Pythagorean Theorem")
+                    Text("3rd side of Right Triangle")
                         .multilineTextAlignment(.center)
                         .padding()
                         .font(.largeTitle)
@@ -47,10 +47,6 @@ struct ContentView: View {
                 }
 
                 Spacer()
-
-                VStack {
-
-                }
 
                 TextField("Side 1 ", text: $Side1)
                     .textFieldStyle(.plain)
@@ -88,11 +84,23 @@ struct ContentView: View {
                         .foregroundStyle(.blue)
                 )
                 .navigationDestination(isPresented: $navigateToAnswer) {
-                    AnswerView(answer: answer)
+                    AnswerView(answer: answer, calculationType: "Hypotenuse length")
                 }
 
                 Spacer()
                 Spacer()
+                
+                NavigationLink{
+                    MenuSelectPage()
+                } label: {
+                    Text("Calculate Some Other Stuff Here")
+                        .bold()
+                        .font(.title)
+                        .background(RoundedRectangle(cornerRadius:30)
+                            .frame(width:365, height: 100)
+                            .foregroundStyle(.yellow)
+                        )
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()

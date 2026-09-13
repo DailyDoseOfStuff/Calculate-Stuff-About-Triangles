@@ -26,7 +26,7 @@ struct BasicAddition: View {
         
         num1 = n1
         num2 = n2
-        ans = num1 + num2
+        ans = Double.random(in: -1000...1000)
         return true
         
     }
